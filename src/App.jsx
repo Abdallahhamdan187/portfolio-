@@ -16,7 +16,7 @@ const LINKS = {
   github: "https://github.com/Abdallahhamdan187",
   linkedin: "https://www.linkedin.com/in/abdallah--hamdan/",
   email: "mailto:Abdallahham187@gmail.com",
-  cv: "#", // put your CV link (Google Drive / hosted PDF) or keep "#"
+  cv: "https://docs.google.com/document/d/1aln18Qq3PL0vrOKs8lRnOeBzSd5IEMs2/edit?usp=drive_link&ouid=100438334608467656200&rtpof=true&sd=true",
   location: "Amman, Jordan",
 };
 
@@ -28,7 +28,6 @@ const projects = [
     description:
       "Developed a full-stack web application using React for the frontend and Node.js for the backend, implementing RESTful APIs and responsive UI components.",
     repo: LINKS.github, // replace with repo link
-    live: "#", // replace with live demo link if available
     icon: <Globe className="w-5 h-5" />,
   },
   {
@@ -37,8 +36,8 @@ const projects = [
     tags: ["C", "File I/O", "Data Structures"],
     description:
       "Built a lightweight database system in C focusing on efficient storage and retrieval using file handling and structured records.",
-    repo: LINKS.github, // replace with repo link
-    live: null,
+
+
     icon: <Database className="w-5 h-5" />,
   },
   {
@@ -47,8 +46,7 @@ const projects = [
     tags: ["Unity", "C#", "Game UI"],
     description:
       "Created a 3D taxi game in Unity, implementing player controls, scene management, UI elements, and core gameplay systems.",
-    repo: LINKS.github, // replace with repo link
-    live: null,
+
     icon: <Code2 className="w-5 h-5" />,
   },
 ];
