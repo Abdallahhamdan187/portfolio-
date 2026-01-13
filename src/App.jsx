@@ -16,6 +16,7 @@ const LINKS = {
   github: "https://github.com/Abdallahhamdan187",
   linkedin: "https://www.linkedin.com/in/abdallah--hamdan/",
   email: "mailto:Abdallahham187@gmail.com",
+  gmail: "https://mail.google.com/mail/?view=cm&fs=1&to=Abdallahham187@gmail.com",
   cv: "https://docs.google.com/document/d/1aln18Qq3PL0vrOKs8lRnOeBzSd5IEMs2/edit?usp=drive_link&ouid=100438334608467656200&rtpof=true&sd=true",
   location: "Amman, Jordan",
 };
@@ -27,7 +28,7 @@ const projects = [
     tags: ["React", "Node.js", "REST API", "Auth", "MySQL"],
     description:
       "Developed a full-stack web application using React for the frontend and Node.js for the backend, implementing RESTful APIs and responsive UI components.",
-    repo: LINKS.github, // replace with repo link
+    repo: "https://github.com/Abdallahhamdan187/PUT-YOUR-REPO-HERE",
     icon: <Globe className="w-5 h-5" />,
   },
   {
@@ -36,8 +37,7 @@ const projects = [
     tags: ["C", "File I/O", "Data Structures"],
     description:
       "Built a lightweight database system in C focusing on efficient storage and retrieval using file handling and structured records.",
-
-
+    repo: null,
     icon: <Database className="w-5 h-5" />,
   },
   {
@@ -46,7 +46,7 @@ const projects = [
     tags: ["Unity", "C#", "Game UI"],
     description:
       "Created a 3D taxi game in Unity, implementing player controls, scene management, UI elements, and core gameplay systems.",
-
+    repo: null,
     icon: <Code2 className="w-5 h-5" />,
   },
 ];
@@ -104,13 +104,26 @@ function Button({ href, children, variant = "primary" }) {
       ? "bg-slate-900 text-white hover:bg-slate-800 shadow-soft"
       : "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 shadow-sm";
 
+  const isExternal = href?.startsWith("http");
+  const isMail = href?.startsWith("mailto:");
+
   return (
-    <a href={href} target={href?.startsWith("http") ? "_blank" : "_self"} rel="noreferrer" className={`${base} ${styles}`}>
+    <a
+      href={href}
+      target={isExternal ? "_blank" : isMail ? "_blank" : "_self"}
+      rel={isExternal ? "noreferrer" : undefined}
+      className={`${base} ${styles}`}
+      onClick={(e) => {
+        if (isMail) {
+          window.location.href = href;
+          e.preventDefault();
+        }
+      }}
+    >
       {children}
     </a>
   );
 }
-
 function SectionTitle({ eyebrow, title, desc }) {
   return (
     <div className="mb-8">
@@ -122,7 +135,26 @@ function SectionTitle({ eyebrow, title, desc }) {
 }
 
 export default function App() {
+
+  const emailAddress = "Abdallahham187@gmail.com";
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(emailAddress);
+      alert("Email copied ✅");
+    } catch {
+      // fallback
+      const el = document.createElement("textarea");
+      el.value = emailAddress;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand("copy");
+      document.body.removeChild(el);
+      alert("Email copied ✅");
+    }
+  };
   return (
+
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-900">
       {/* Top background accents */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -155,8 +187,8 @@ export default function App() {
               <Button href={LINKS.linkedin} variant="secondary">
                 <Linkedin className="w-4 h-4" /> LinkedIn
               </Button>
-              <Button href={LINKS.email}>
-                <Mail className="w-4 h-4" /> Contact
+              <Button href={LINKS.gmail} variant="secondary">
+                <Mail className="w-4 h-4" /> Email Me
               </Button>
             </div>
           </nav>
@@ -194,7 +226,7 @@ export default function App() {
                 <Button href={LINKS.cv} variant="secondary">
                   <ExternalLink className="w-4 h-4" /> Download CV
                 </Button>
-                <Button href={LINKS.email} variant="secondary">
+                <Button href={LINKS.gmail} variant="secondary">
                   <Mail className="w-4 h-4" /> Email Me
                 </Button>
               </div>
@@ -320,15 +352,16 @@ export default function App() {
                   </div>
 
                   <div className="mt-6 flex flex-wrap gap-3">
-                    <a
-                      href={p.repo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition"
-                    >
-                      <Github className="w-4 h-4" /> Repo
-                    </a>
-
+                    {p.repo && (
+                      <a
+                        href={p.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition"
+                      >
+                        <Github className="w-4 h-4" /> Repo
+                      </a>
+                    )}
                     {p.live ? (
                       <a
                         href={p.live}
@@ -407,8 +440,8 @@ export default function App() {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Button href={LINKS.email}>
-                    <Mail className="w-4 h-4" /> Email
+                  <Button href={LINKS.gmail} variant="secondary">
+                    <Mail className="w-4 h-4" /> Email Me
                   </Button>
                   <Button href={LINKS.linkedin} variant="secondary">
                     <Linkedin className="w-4 h-4" /> LinkedIn
